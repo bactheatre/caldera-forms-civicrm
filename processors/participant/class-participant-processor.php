@@ -142,7 +142,7 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 		$form_values = $this->plugin->helper->map_fields_to_processor( $config, $form, $form_values );
 
 
-		if ( ! empty( $transient->contacts->{$this->contact_link} ) ) {
+		if (  empty( $transient->contacts->{$this->contact_link} ) ) {
 			// event
 			$event = $this->events[$config['processor_id']];
 
@@ -151,7 +151,12 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 			$form_values['role_id'] = ( $config['role_id'] == 'default_role_id' ) ? $event['default_role_id'] : $config['role_id'];
 			$form_values['status_id'] = ( $config['status_id'] == 'default_status_id' ) ? 'Registered' : $config['status_id']; // default is registered
 
+		
+
 			if ( ! empty( $config['campaign_id'] ) ) $form_values['campaign_id'] = $config['campaign_id'];
+
+
+			$_SESSION['addtional_data'][]=$form_values;
 
 			// if multiple participant processors, we need to update $this->registrations
 			$this->registrations = $this->get_participant_registrations( $this->event_ids, $form );
@@ -191,7 +196,7 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 			}
 
 			if ( ( ! $config['is_monetary'] && ! $is_registered ) || ( ! $config['is_monetary'] && $this->is_registered_and_same_email_allowed( $is_registered, $event ) ) ) {
-				try {
+				/*try {
 					$create_participant = civicrm_api3( 'Participant', 'create', $form_values );
 					if ( ! $create_participant['is_error'] && $config['is_email_receipt'] ) {
 						$this->send_mail( $create_participant['values'][$create_participant['id']], $event );
@@ -199,7 +204,9 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 				} catch ( CiviCRM_API3_Exception $e ) {
 					$error = $e->getMessage() . '<br><br><pre>' . $e->getTraceAsString() . '</pre>';
 					return [ 'note' => $error, 'type' => 'error' ];
-				}
+				}*/
+
+
 			}
 		}
 
