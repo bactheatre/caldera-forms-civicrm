@@ -33,15 +33,20 @@ class Add_Caldera_Form {
 
         add_filter( 'woocommerce_loop_add_to_cart_link', array($this,'filter_woocommerce_loop_add_to_cart_link'), 10, 2 );
 
+        add_action( 'caldera_forms_submit_complete', array($this,'caldera_forms_additional_data'), 10, 4);
+
+
+        add_action( 'caldera_forms_entry_saved', array($this,'slug_process_form', 10, 3 ) );
+
         // this ajax call is on hold for now when we add the pop up for caldera form then it it will work 
 
-        add_filter( 'wp_ajax_load_caldera_form_by_ajax', array($this,'load_caldera_form_by_ajax_callback'), 10, 2 );
+        // add_filter( 'wp_ajax_load_caldera_form_by_ajax', array($this,'load_caldera_form_by_ajax_callback'), 10, 2 );
 
 
-        add_filter( 'wp_ajax_nopriv_load_caldera_form_by_ajax', array($this,'load_caldera_form_by_ajax_callback'), 10, 2 );
+        // add_filter( 'wp_ajax_nopriv_load_caldera_form_by_ajax', array($this,'load_caldera_form_by_ajax_callback'), 10, 2 );
 
 
-        add_action( 'wp_footer',array($this,'add_model_popup'), 5 );  
+       // add_action( 'wp_footer',array($this,'add_model_popup'), 5 );  
 
         add_action( 'woocommerce_thankyou', array( $this, 'civicrm_sync_additional_data' ), 10, 1 );    
 	}
@@ -55,7 +60,6 @@ class Add_Caldera_Form {
 	public function filter_woocommerce_loop_add_to_cart_link( $quantity, $product) { 
 
 		wp_enqueue_script( 'cfc-bact-front' );
-        wp_enqueue_script( 'cfc-bact-bootstrap');
         wp_localize_script('cfc-bact-front', 'ajax_custom', array( 'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ) ));
 	    $product_id= get_the_ID($product);
 	    $caldera_form_id=get_post_meta( $product_id, '_caldera_form_id', false );
@@ -64,8 +68,9 @@ class Add_Caldera_Form {
 
 			echo '<a href="'.site_url().'/shop/?add-to-cart='.$product_id.'" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="'.$product_id.'" data-product_sku="" aria-label="" rel="nofollow">Add to cart</a>';
         }else{
-		    echo do_shortcode("<button id='butinfo_".$product_id."' class='addtocartbutton checkout-button button alt wc-forward'>Add to cart</button>");
-		    echo  '<div style="display:none" id="showform'.$product_id.'">'.do_shortcode('[caldera_form id="'.$caldera_form_id[0].'"]').'</div>';
+
+		    echo do_shortcode('[caldera_form_modal id="'.$caldera_form_id[0].'" type="button"]Add to cart [/caldera_form_modal]');
+		  
 	    }
 	}
 
@@ -76,47 +81,9 @@ class Add_Caldera_Form {
      * 
      */
 	public function bact_scripts_and_styles(){  
-		wp_register_script( 'cfc-bact-bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js', [ 'jquery' ], CF_CIVICRM_INTEGRATION_VER );
 		 // Bact frontend script
 		wp_register_script( 'cfc-bact-front', CF_CIVICRM_INTEGRATION_URL . 'assets/js/bact-front.js', [ 'jquery' ], CF_CIVICRM_INTEGRATION_VER );
 	}
-     /**
-	 *Add_model_popup
-	 *
-	 * @since    1.0.0
-     * 
-     */
-	public function  add_model_popup(){
-	   echo ' <div class="modal fade" id="empModal" style="display: none;"  tabindex="-1" role="dialog" 
-	                    aria-labelledby="exampleModalLabel" aria-hidden="true"></div>'; 
-	}
-
-	/**
-	 * Show Pop up when we click on the  Add to cart Button
-	 *
-	 * @since    1.0.0
-	 */
-	public function load_caldera_form_by_ajax_callback() { 
-
-	  $product_id=$_POST['product_id'];
-
-	  $_caldera_form_id=get_post_meta( $product_id, '_caldera_form_id', false );
-
-	  echo '<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-					     <h4 class="modal-title" id="exampleModalLabel">'.get_the_title($product_id).'</h4>
-					     <h5>Additional information</h5>
-					    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					     <span aria-hidden="true">&times;</span>
-					     </button>
-					 </div>
-					<div class="modal-body">'.do_shortcode('[caldera_form id="'.$_caldera_form_id[0].'"]').'
-                    </div>
-				</div>
-		</div>';
-       die();
-	 } 
 
 	/**
 	 * Addtional Information For Participant 
@@ -177,6 +144,7 @@ class Add_Caldera_Form {
 		        $contact_child_id = $create_child_contact['id'];
 
                 $_SESSION['addtional_data']['contact_id'][$count]=$contact_child_id;
+
 		     	$relationship_contact = civicrm_api3('Relationship', 'create', [
 								  'contact_id_a' => $contact_id,
 								  'contact_id_b' => $contact_child_id,
@@ -202,5 +170,6 @@ class Add_Caldera_Form {
 			error_log($log, 3, $pluginlog);
 	   }
 	}
+
 
 }

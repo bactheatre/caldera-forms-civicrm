@@ -134,6 +134,8 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 	 */
 	public function pre_processor( $config, $form, $processid ) {
 
+		
+
 		// cfc transient object
 		$transient = $this->plugin->transient->get();
 		$this->contact_link = 'cid_' . $config['contact_link'];

@@ -1,36 +1,45 @@
-jQuery(document).ready(function($){
+/**
+* Call Back Function after Submitting the Caldera Form .
+*
+*
+*/
 
- $('.addtocartbutton').click(function(){
+// jQuery(document).ready(function($){
 
-   var id = this.id;
-   var splitid = id.split('_');
-   var product_id = splitid[1];
+//  $('.addtocartbutton').click(function(){
 
-  $('#showform'+product_id).toggle(500);
-/*
-     var data = {
-      'action': 'load_caldera_form_by_ajax',
-      'product_id': product_id, };
+//    var id = this.id;
+//    var splitid = id.split('_');
+//    var product_id = splitid[1];
+// });
 
-   // AJAX request
-   $.ajax({
-    url: ajax_custom.ajaxurl,
-    type: 'post',
-    data: data,
 
-     beforeSend: function() {
-         $('#empModal').empty();
-      },
-    success: function(response){ 
 
-      // Add response in Modal body
-      $('#empModal').append(response);
-
-      // Display Modal
-      $('#empModal').modal('show'); 
-    }
-  });*/
- });
+var $ = jQuery;
+jQuery(document).ready(function() {
+    initializeGlobelCalls.init();
 });
+
+var initializeGlobelCalls = function () {
+
+    var CalderaFormModel = function(){
+       jQuery("form").each(function(){
+          jQuery(this).find("input[type=submit]").on("click", function(){
+            var product_id = jQuery(this).parents('form').find("input[name=_cf_cr_pst]").val();
+            console.log(product_id);
+            var pageURL = jQuery(location).attr("href");
+            var splitpageURL = pageURL.split('#');
+            var pageURL = splitpageURL[0];
+            window.location.href =pageURL+"?add-to-cart="+product_id;
+           })
+       });
+     }
+ return {
+        init: function () {
+            CalderaFormModel();
+            
+        }
+    };
+}();
 
 
