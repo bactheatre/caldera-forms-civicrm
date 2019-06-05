@@ -240,6 +240,23 @@ class CiviCRM_Caldera_Forms {
 		// include CiviDiscount helper class
 		include CF_CIVICRM_INTEGRATION_PATH . 'includes/class-civicrm-caldera-forms-cividiscount.php';
 
+
+
+        // Include   Calder From in Front end shop page
+        include CF_CIVICRM_INTEGRATION_PATH . 'caldera-form/class-add-caldera-form.php';
+
+         // Include   Calder From in Front end shop page
+        include CF_CIVICRM_INTEGRATION_PATH . 'caldera-form/class-caldera-form-meta-box-admin.php';
+		
+
+
+
+
+
+
+
+
+
 	}
 
 	/**
@@ -274,6 +291,15 @@ class CiviCRM_Caldera_Forms {
 		// init cividiscount class
 		if ( $this->processors->enabled_extensions && in_array( 'org.civicrm.module.cividiscount', $this->processors->enabled_extensions ) )
 			$this->cividiscount = new CiviCRM_Caldera_Forms_CiviDiscount( $this );
+
+
+
+		// init Add Caldera Form
+	    new Add_Caldera_Form( $this );
+
+
+		// init Caldera Form Meta Box Admin 
+		new Caldera_Form_Meta_Box_Admin( $this );
 
 	}
 

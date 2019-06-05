@@ -206,6 +206,7 @@ class CiviCRM_Caldera_Forms_Contact_Processor {
 			}
 
 			try {
+				
 				$create_contact = civicrm_api3( 'Contact', 'create', $form_values['civicrm_contact'] );
 			} catch ( CiviCRM_API3_Exception $e ) {
 				$error = $e->getMessage() . '<br><br><pre>' . $e->getTraceAsString() . '</pre>';
