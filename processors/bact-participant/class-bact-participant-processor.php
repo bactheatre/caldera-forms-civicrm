@@ -4,7 +4,7 @@
  * CiviCRM Caldera Forms Participant Processor Class.
  * @since 1.0
  */
-class CiviCRM_Caldera_Forms_Participant_Processor {
+class CiviCRM_Caldera_Forms_Bact_Participant_Processor {
 
 	/**
 	 * Plugin reference.
@@ -83,7 +83,7 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 		// register this processor
-		add_filter( 'caldera_forms_get_form_processors', array( $this, 'register_processor' ) );
+		add_filter( 'caldera_forms_get_form_processors', array( $this, 'bact_register_processor' ) );
 
 		// build price field references, at both render and submission start
 		add_filter( 'caldera_forms_render_get_form', [ $this, 'get_set_necessary_data' ] );
@@ -108,14 +108,14 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 	 * @param array $processors The existing processors
 	 * @return array $processors The modified processors
 	 */
-	public function register_processor( $processors ) {
+	public function bact_register_processor( $processors ) {
 
 		$processors[$this->key_name] = [
-			'name' => __( 'CiviCRM Participant', 'caldera-forms-civicrm' ),
-			'description' => __( 'Add CiviCRM Participant to event (for Event registration).', 'caldera-forms-civicrm' ),
+			'name' => __( 'CiviCRM Bact Participant', 'caldera-forms-civicrm' ),
+			'description' => __( 'Add CiviCRM Bact Participant to event (for Event registration).', 'caldera-forms-civicrm' ),
 			'author' => 'Andrei Mondoc',
-			'template' => CF_CIVICRM_INTEGRATION_PATH . 'processors/participant/config.php',
-			'pre_processor' => [ $this, 'pre_processor' ],
+			'template' => CF_CIVICRM_INTEGRATION_PATH . 'processors/bact-participant/bact-config.php',
+			'pre_processor' => [ $this, 'bact_pre_processor' ],
 			'processor' => [ $this, 'processor' ],
 			'magic_tags' => [ 'processor_id' ]
 		];
@@ -132,9 +132,9 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 	 * @param array $form Form configuration
 	 * @param string $processid The process id
 	 */
-	public function pre_processor( $config, $form, $processid ) {
+	public function bact_pre_processor( $config, $form, $processid ) {
 
-		
+
 
 		// cfc transient object
 		$transient = $this->plugin->transient->get();
@@ -153,12 +153,12 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 			$form_values['role_id'] = ( $config['role_id'] == 'default_role_id' ) ? $event['default_role_id'] : $config['role_id'];
 			$form_values['status_id'] = ( $config['status_id'] == 'default_status_id' ) ? 'Registered' : $config['status_id']; // default is registered
 
-		
-
 			if ( ! empty( $config['campaign_id'] ) ) $form_values['campaign_id'] = $config['campaign_id'];
 
 
 			// $_SESSION['addtional_data'][]=$form_values;
+
+			// $_SESSION['error']=$form_values;
 
 			// if multiple participant processors, we need to update $this->registrations
 			$this->registrations = $this->get_participant_registrations( $this->event_ids, $form );
@@ -207,8 +207,6 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 					$error = $e->getMessage() . '<br><br><pre>' . $e->getTraceAsString() . '</pre>';
 					return [ 'note' => $error, 'type' => 'error' ];
 				}*/
-
-
 			}
 		}
 

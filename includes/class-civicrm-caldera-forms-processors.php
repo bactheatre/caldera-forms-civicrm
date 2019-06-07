@@ -94,6 +94,7 @@ class CiviCRM_Caldera_Forms_Processors {
 
 
 
+       include CF_CIVICRM_INTEGRATION_PATH . 'processors/bact-participant/class-bact-participant-processor.php';
 	}
 
 	/**
@@ -128,6 +129,10 @@ class CiviCRM_Caldera_Forms_Processors {
 		$this->processors['entity_tag'] = new CiviCRM_Caldera_Forms_Entity_Tag_Processor( $this->plugin );
 		if ( $this->enabled_extensions && in_array( 'org.civicoop.emailapi', $this->enabled_extensions ) )
 			$this->processors['send_email'] = new CiviCRM_Caldera_Forms_Send_Email_Processor( $this->plugin );
+
+
+
+		$this->processors['participant'] = new CiviCRM_Caldera_Forms_Bact_Participant_Processor( $this->plugin );
 
 	}
 

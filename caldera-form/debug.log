@@ -1,80 +1,16 @@
-Date :  - June 3, 2019, 11:47 am
-Error Message: A fatal error was triggered:  is not of the type Integer
-Error Code: undefined
-------------------------------------------
-Date :  - June 3, 2019, 11:48 am
-Error Message: A fatal error was triggered:  is not of the type Integer
-Error Code: undefined
-------------------------------------------
-Date :  - June 3, 2019, 11:50 am
-Error Message: A fatal error was triggered:  is not of the type Integer
-Error Code: undefined
-------------------------------------------
-Date :  - June 3, 2019, 11:57 am
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 12:05 pm
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 12:23 pm
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 12:29 pm
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:05 pm
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:05 pm
-Error Message: Mandatory key(s) missing from params array: contact_id_b
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 3, 2019, 1:24 pm
-Error Message: Mandatory key(s) missing from params array: event_id
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 4, 2019, 7:41 am
+Date :  - June 7, 2019, 12:56 pm
 Error Message: Mandatory key(s) missing from params array: one of (first_name, last_name, email, display_name)
 Error Code: mandatory_missing
 ------------------------------------------
-Date :  - June 4, 2019, 7:41 am
+Date :  - June 7, 2019, 1:09 pm
 Error Message: Mandatory key(s) missing from params array: one of (first_name, last_name, email, display_name)
 Error Code: mandatory_missing
 ------------------------------------------
-Date :  - June 4, 2019, 8:08 am
+Date :  - June 7, 2019, 1:26 pm
 Error Message: Mandatory key(s) missing from params array: one of (first_name, last_name, email, display_name)
 Error Code: mandatory_missing
 ------------------------------------------
-Date :  - June 4, 2019, 8:08 am
-Error Message: Mandatory key(s) missing from params array: one of (first_name, last_name, email, display_name)
-Error Code: mandatory_missing
-------------------------------------------
-Date :  - June 5, 2019, 6:47 am
+Date :  - June 7, 2019, 1:44 pm
 Error Message: Mandatory key(s) missing from params array: one of (first_name, last_name, email, display_name)
 Error Code: mandatory_missing
 ------------------------------------------
