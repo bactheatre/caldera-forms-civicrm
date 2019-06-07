@@ -131,7 +131,7 @@ class Add_Caldera_Form {
 				$entry        = new Caldera_Forms_Entry( $form, $entry_id );
 				$custom_field = $entry->get_fields();
 
-				$_SESSION['addtional_data']=array_flip($custom_field);
+				// $_SESSION['addtional_data']=array_flip($custom_field);
               
 		
                  foreach ($custom_field as $key ) {
