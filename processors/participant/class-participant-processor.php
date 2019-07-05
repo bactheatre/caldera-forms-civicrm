@@ -158,7 +158,7 @@ class CiviCRM_Caldera_Forms_Participant_Processor {
 			if ( ! empty( $config['campaign_id'] ) ) $form_values['campaign_id'] = $config['campaign_id'];
 
 
-			// $_SESSION['addtional_data'][]=$form_values;
+			// $_SESSION['additional_data'][]=$form_values;
 
 			// if multiple participant processors, we need to update $this->registrations
 			$this->registrations = $this->get_participant_registrations( $this->event_ids, $form );

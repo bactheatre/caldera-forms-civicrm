@@ -52,19 +52,18 @@ class Add_Caldera_Form {
 		if(isset($_GET['delete-child'])) {
 			$entry_id = $_GET['delete-child'];
 			Caldera_Forms_Entry_Bulk::delete_entries( array( $entry_id ) );
-			$count = 0; foreach ( $_SESSION['addtional_data'] as $key ) {
-			$session_entry_id = $_SESSION['addtional_data']['entry_id'][ $count ];
+			$count = 0; foreach ( $_SESSION['additional_data'] as $key ) {
+			$session_entry_id = $_SESSION['additional_data']['entry_id'][ $count ];
 				if ( $entry_id == $session_entry_id ) {
-					unset( $_SESSION['addtional_data']['entry_id'][ $count ] );
-					unset( $_SESSION['addtional_data']['caldera_form_id'][ $count ] );
-					unset( $_SESSION['addtional_data']['event_id'][ $count ] );
+					unset( $_SESSION['additional_data']['entry_id'][ $count ] );
+					unset( $_SESSION['additional_data']['caldera_form_id'][ $count ] );
+					unset( $_SESSION['additional_data']['event_id'][ $count ] );
 				}
 			   $count++;
 			}
 	    }
 	   /*Updating Session Variable**/
 	}
-
 
 
 	/**
@@ -137,16 +136,16 @@ class Add_Caldera_Form {
 			$campaign_id     = get_post_meta( $ot_event_id, 'campaign_id', false );
 			$count           = 0;
 
-			foreach ( $_SESSION['addtional_data'] as $key ) {
+			foreach ( $_SESSION['additional_data'] as $key ) {
 
-				$entry_id = $_SESSION['addtional_data']['entry_id'][ $count ];
+				$entry_id = $_SESSION['additional_data']['entry_id'][ $count ];
 
-				$form_id = $_SESSION['addtional_data']['caldera_form_id'][ $count ];
+				$form_id = $_SESSION['additional_data']['caldera_form_id'][ $count ];
 
 				$form = Caldera_Forms_Forms::get_form( $form_id );
 
 				foreach ( $form['processors'] as $key ) {
-					$addtional_data = $key['config'];
+					$additional_data = $key['config'];
 				}
 				// Get form entry.
 				$entry        = new Caldera_Forms_Entry( $form, $entry_id );
@@ -157,9 +156,9 @@ class Add_Caldera_Form {
 
 				// Mapping Dynamic Front Mapping custom field and caldera form values.
 				foreach ( $caldera_form_field_ids as $key => $value ) {
-					$data_key = array_search( $key, $addtional_data );
+					$data_key = array_search( $key, $additional_data );
 					if ( $data_key !== false ) {
-						$addtional_data[ $data_key ] = $value;
+						$additional_data[ $data_key ] = $value;
 					}
 				}
 				// Checking Duplicate Contact In CIVICRM DB using Dedupe Rule .
@@ -167,7 +166,7 @@ class Add_Caldera_Form {
 					$create_child_contact = civicrm_api3(
 						'Contact', 'create', [
 							'contact_type' => 'Individual',
-							'first_name'   => $addtional_data['source'],
+							'first_name'   => $additional_data['source'],
 							'return'       => array( 'id' ),
 						]
 					);
@@ -184,15 +183,15 @@ class Add_Caldera_Form {
 					}
 
 					// Updating Event Id and Contact ID here .
-					$addtional_data ['contact_id'] = $create_child_contact['id'];
-					$addtional_data['event_id']    = $cv_event_id[0];
-					$addtional_data['campaign_id'] = $campaign_id[0];
+					$additional_data ['contact_id'] = $create_child_contact['id'];
+					$additional_data['event_id']    = $cv_event_id[0];
+					$additional_data['campaign_id'] = $campaign_id[0];
 
-					unset( $addtional_data['source'] );
+					unset( $additional_data['source'] );
 
-					$participant_result = civicrm_api3( 'Participant', 'create', $addtional_data );
+					$participant_result = civicrm_api3( 'Participant', 'create', $additional_data );
 
-					$_SESSION['addtional_count'] = $addtional_data;
+					$_SESSION['addtional_count'] = $additional_data;
 					$count++;
 
 				} catch ( CiviCRM_API3_Exception $e ) {
@@ -228,13 +227,16 @@ class Add_Caldera_Form {
 		$caldera_form_id = get_post_meta( $ot_event_id, '_caldera_form_id', false );
 		$count           = 0;
 		$count_qty       = 0;
+		
+
+	if(isset($_SESSION['additional_data'])){
 		echo '<table>';
 
-		foreach ( $_SESSION['addtional_data'] as $key ) {
+		foreach ( $_SESSION['additional_data'] as $key ) {
 
-			$entry_id            = $_SESSION['addtional_data']['entry_id'][ $count ];
-			$form_id             = $_SESSION['addtional_data']['caldera_form_id'][ $count ];
-			$session_ot_event_id = $_SESSION['addtional_data']['event_id'][ $count ];
+			$entry_id            = $_SESSION['additional_data']['entry_id'][ $count ];
+			$form_id             = $_SESSION['additional_data']['caldera_form_id'][ $count ];
+			$session_ot_event_id = $_SESSION['additional_data']['event_id'][ $count ];
 
 				if ( $form_id == $caldera_form_id[0] && $session_ot_event_id == $ot_event_id ) {
 					echo '<tr><td>'.do_shortcode( '[caldera_form_modal id="' . $caldera_form_id[0] . '"  entry="' . $entry_id . '"  type="button"] Edit Participant [/caldera_form_modal]' ).'</td> <td>';
@@ -257,6 +259,7 @@ class Add_Caldera_Form {
 		}
 		echo '</table>';
 	}
+	}
 	
 	/**
 	 * Addtional Information For Participant.
@@ -271,9 +274,9 @@ class Add_Caldera_Form {
 		if ( isset( $_POST['_cf_cr_pst'] ) ) {
 			$event_id = sanitize_text_field( wp_unslash( $_POST['_cf_cr_pst'] ) );
 		}
-		$_SESSION['addtional_data']['entry_id'][]        = $entry_id;
-		$_SESSION['addtional_data']['caldera_form_id'][] = $form['ID'];
-		$_SESSION['addtional_data']['event_id'][]        = $event_id;
+		$_SESSION['additional_data']['entry_id'][]        = $entry_id;
+		$_SESSION['additional_data']['caldera_form_id'][] = $form['ID'];
+		$_SESSION['additional_data']['event_id'][]        = $event_id;
 	}
 	/**
 	 * Unset the Session Variable Additional Variable.
@@ -282,7 +285,7 @@ class Add_Caldera_Form {
 	 */
 	public function sessions_data_unset() {
 
-		unset( $_SESSION['addtional_data'] );
+		unset( $_SESSION['additional_data'] );
 	}
 	/**
 	 *  Delete one Caldera Forms entry
@@ -293,12 +296,12 @@ class Add_Caldera_Form {
 
 		$entry_id = $_POST['entry_id'];
 		Caldera_Forms_Entry_Bulk::delete_entries( array( $entry_id ) );
-		$count = 0; foreach ( $_SESSION['addtional_data'] as $key ) {
-		$session_entry_id = $_SESSION['addtional_data']['entry_id'][ $count ];
+		$count = 0; foreach ( $_SESSION['additional_data'] as $key ) {
+		$session_entry_id = $_SESSION['additional_data']['entry_id'][ $count ];
 			if ( $entry_id == $session_entry_id ) {
-				unset( $_SESSION['addtional_data']['entry_id'][ $count ] );
-				unset( $_SESSION['addtional_data']['caldera_form_id'][ $count ] );
-				unset( $_SESSION['addtional_data']['event_id'][ $count ] );
+				unset( $_SESSION['additional_data']['entry_id'][ $count ] );
+				unset( $_SESSION['additional_data']['caldera_form_id'][ $count ] );
+				unset( $_SESSION['additional_data']['event_id'][ $count ] );
 			}
 		   $count++;
 		}
@@ -312,7 +315,7 @@ class Add_Caldera_Form {
 	 */
 	 public function wc_empty_cart_redirect_url(   ) {
 
-	 	unset( $_SESSION['addtional_data']);
+	 	unset( $_SESSION['additional_data']);
 
 	 	return site_url().'/shop';
 	}

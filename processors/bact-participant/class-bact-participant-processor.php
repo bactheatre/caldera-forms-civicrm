@@ -156,7 +156,7 @@ class CiviCRM_Caldera_Forms_Bact_Participant_Processor {
 			if ( ! empty( $config['campaign_id'] ) ) $form_values['campaign_id'] = $config['campaign_id'];
 
 
-			// $_SESSION['addtional_data'][]=$form_values;
+			// $_SESSION['additional_data'][]=$form_values;
 
 			// $_SESSION['error']=$form_values;
 
