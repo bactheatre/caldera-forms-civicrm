@@ -47,12 +47,14 @@ class Add_Caldera_Form {
 
 		add_filter( 'woocommerce_return_to_shop_redirect', array( $this,'wc_empty_cart_redirect_url') );
 
+        add_action( 'woocommerce_before_cart_item_quantity_zero',   array( $this,'action_before_cart_item_quantity_zero'), 20, 4 );
+
 		/*Updating Session Variable**/
 
 		if(isset($_GET['delete-child'])) {
 			$entry_id = $_GET['delete-child'];
 			Caldera_Forms_Entry_Bulk::delete_entries( array( $entry_id ) );
-			$count = 0; foreach ( $_SESSION['additional_data'] as $key ) {
+			$count = 0; foreach ( $_SESSION['additional_data'] ['entry_id'] as $key ) {
 			$session_entry_id = $_SESSION['additional_data']['entry_id'][ $count ];
 				if ( $entry_id == $session_entry_id ) {
 					unset( $_SESSION['additional_data']['entry_id'][ $count ] );
@@ -226,13 +228,13 @@ class Add_Caldera_Form {
 		$ot_event_id     = $cart_item['event_id'];
 		$caldera_form_id = get_post_meta( $ot_event_id, '_caldera_form_id', false );
 		$count           = 0;
-		$count_qty       = 0;
+		$count_qty       = 0;		
 		
 
 	if(isset($_SESSION['additional_data'])){
 		echo '<table>';
 
-		foreach ( $_SESSION['additional_data'] as $key ) {
+		foreach ( $_SESSION['additional_data']['entry_id'] as $key ) {
 
 			$entry_id            = $_SESSION['additional_data']['entry_id'][ $count ];
 			$form_id             = $_SESSION['additional_data']['caldera_form_id'][ $count ];
@@ -254,7 +256,7 @@ class Add_Caldera_Form {
 	                return $args;	},10, 2 ); 
 				}
 
-				$count++;
+			 	$count++;
 				echo '</td></tr>';
 		}
 		echo '</table>';
@@ -296,7 +298,7 @@ class Add_Caldera_Form {
 
 		$entry_id = $_POST['entry_id'];
 		Caldera_Forms_Entry_Bulk::delete_entries( array( $entry_id ) );
-		$count = 0; foreach ( $_SESSION['additional_data'] as $key ) {
+		$count = 0; foreach ( $_SESSION['additional_data']['entry_id']as $key ) {
 		$session_entry_id = $_SESSION['additional_data']['entry_id'][ $count ];
 			if ( $entry_id == $session_entry_id ) {
 				unset( $_SESSION['additional_data']['entry_id'][ $count ] );
@@ -319,4 +321,5 @@ class Add_Caldera_Form {
 
 	 	return site_url().'/shop';
 	}
+
 }

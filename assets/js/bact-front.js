@@ -18,6 +18,23 @@
 var $ = jQuery;
 jQuery(document).ready(function() {
     initializeGlobelCalls.init();
+
+
+
+ //jQuery('.showmodal').remodal();
+
+
+  jQuery(".button").click(function(){
+alert();
+
+            var pageURL = jQuery(location).attr("href");
+            var splitpageURL = pageURL.split('#');
+            var pageURL = splitpageURL[0];
+            window.location.href =pageUR
+
+
+  });
+
 });
 
 var initializeGlobelCalls = function () {
