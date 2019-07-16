@@ -32,6 +32,8 @@ class Add_Caldera_Form_Event_Date extends QSOT_Templates  {
         add_filter( 'qsot-event-frontend-settings', array( $this, 'overtake_some_woocommerce_core_templates'),10,2);
         add_filter('qsot-locate-template', array(__CLASS__, 'locate_template'), 10, 4);
         add_action( 'woocommerce_after_cart_item_quantity_update', array( &$this, 'update_reservations_on_cart_update' ), 10, 3 );
+        add_action('wp_head', array( $this, 'hook_javascript') );
+
 	}
 
 	/**
@@ -210,5 +212,31 @@ class Add_Caldera_Form_Event_Date extends QSOT_Templates  {
 		// readd this filter for later checks
 		
 	}
+
+	/**
+	 * Addtional Jquery files and script modal .
+	 *
+	 * @since    1.0.0
+	 * @param   form submited entry id               $entry_id .
+	 * @param   new entry id when new entry is added $new_entry .
+	 * @param  form structure with all field        $form .
+	 */
+
+
+     public function hook_javascript() { 
+      ?>
+     
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	  <script>
+	  $( function() {
+	    $( "#tabs" ).tabs();
+	  } );
+        </script>
+    <?php
+}
 
 }

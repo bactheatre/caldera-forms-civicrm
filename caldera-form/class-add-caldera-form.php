@@ -288,6 +288,7 @@ class Add_Caldera_Form {
 	public function sessions_data_unset() {
 
 		unset( $_SESSION['additional_data'] );
+		unset( $_SESSION['bacty_quantity']);
 	}
 	/**
 	 *  Delete one Caldera Forms entry
@@ -318,6 +319,8 @@ class Add_Caldera_Form {
 	 public function wc_empty_cart_redirect_url(   ) {
 
 	 	unset( $_SESSION['additional_data']);
+
+	 	unset( $_SESSION['bacty_quantity']);
 
 	 	return site_url().'/shop';
 	}
