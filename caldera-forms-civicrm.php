@@ -250,6 +250,9 @@ class CiviCRM_Caldera_Forms {
 
         // Include   Calder From in Front end event date  page
         include CF_CIVICRM_INTEGRATION_PATH . 'caldera-form/class-add-caldera-form-event-date.php';
+      // Include   Calder From in Front end event date  page Ajax
+       include CF_CIVICRM_INTEGRATION_PATH . 'caldera-form/class-add-caldera-form-event-date-ajax.php';
+
 		
 
 
@@ -305,6 +308,8 @@ class CiviCRM_Caldera_Forms {
 
 		// init Caldera Form Meta Box Admin 
 		new Caldera_Form_Meta_Box_Admin( $this );
+
+		new Add_Caldera_Form_Event_Date_Ajax( $this ); 
 
 	}
 
