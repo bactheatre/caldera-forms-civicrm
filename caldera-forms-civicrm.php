@@ -18,7 +18,8 @@ require_once ABSPATH . 'wp-admin/includes/plugin.php';
 if (!class_exists('opentickets_community_launcher')) {
 
    deactivate_plugins( plugin_basename( __FILE__ ) );
-   
+   exit;
+
    }
 
 /**
