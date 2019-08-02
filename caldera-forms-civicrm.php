@@ -11,19 +11,21 @@
  * Domain Path: /languages
  */
 
-/**
- * Define constants.
- *
- * @since 0.1
- */
-
 /* checking plugin dependancies */
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 if (!class_exists('opentickets_community_launcher')) {
+
    deactivate_plugins( plugin_basename( __FILE__ ) );
+   
    }
+
+/**
+ * Define constants.
+ *
+ * @since 0.1
+ */
 define( 'CF_CIVICRM_INTEGRATION_VER', '1.0.2' );
 define( 'CF_CIVICRM_INTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'CF_CIVICRM_INTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
