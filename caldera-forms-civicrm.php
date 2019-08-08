@@ -13,14 +13,24 @@
 
 /* checking plugin dependancies */
 
-require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-if (!class_exists('opentickets_community_launcher')) {
+//activate_form_wizard function will create and initialize template required for plugins.
 
-   deactivate_plugins( plugin_basename( __FILE__ ) );
-   exit;
+function activate_caldera_form_civicrm_wizard($network_wide = false) {
+    $plugin = 'opentickets-community-edition/launcher.php';
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    if (!is_plugin_active($plugin)) {
+        echo 'Please install and activate opentickets-community-edition plugin before activating Caldera Form CiviCRM plugin';
+        exit();
+    }
+   $plugin='caldera-forms/caldera-core.php';
 
-   }
+   if (!is_plugin_active($plugin)) {
+        echo 'Please install and activate caldera-forms plugin before activating Caldera Form CiviCRM plugin';
+        exit();
+    }
+}
+register_activation_hook(__FILE__, 'activate_caldera_form_civicrm_wizard');
 
 /**
  * Define constants.
